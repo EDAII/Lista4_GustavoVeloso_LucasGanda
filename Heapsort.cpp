@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 struct node {
@@ -97,7 +99,28 @@ int main() {
     cout << "----------";
     cout << "\n\n";
 
-    struct node arr[] = {{3, 'a'}, {3, 'b'}, {3, 'c'}, {5, 'a'}, {5, 'b'}, {6, 'a'}};
+    std::srand (std::time(0));
+    int length = 8;
+    int numbers[length];
+    for(int i = 0; i < length; i+=2) {
+        std::srand (std::time (0) - i);
+        int random = 1 + (std::rand() % (65 - 1 + 1));
+        numbers[i] = random;
+        if(i < length) {
+            numbers[i+1] = random;
+        }
+    }
+
+    std::sort(numbers, numbers + (sizeof(numbers)/sizeof(numbers[0])));
+
+    struct node arr[length];
+
+    for(int i = 0; i < length; i+=2) {
+        struct node no = {numbers[i], 'a'};
+        arr[i] = no;
+        no.version = 'b';
+        arr[i+1] = no;
+    }
 
     int n = sizeof(arr) / sizeof(arr[0]);
 
